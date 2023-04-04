@@ -38,12 +38,6 @@
 		$e_phone_number = $user_data['ec_phone_number'];
 		$relationship = $user_data['relationship'];
 	} 
-
-
-	$output = $row['first_name'];
-	$output = $row['last_name'];
-	echo $output;
-	
 ?>
 
 <!DOCTYPE html>
@@ -117,6 +111,3 @@
 
 </tbody>
 </html>
-
-
-

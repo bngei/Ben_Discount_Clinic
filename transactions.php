@@ -50,7 +50,6 @@ session_start();
         }
 	
 	</style>
-	<
 	<h2> Make Payment </h2>
 	<form method = "post" action = "" >
 		<fieldset>
