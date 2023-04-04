@@ -143,7 +143,6 @@
 			<div style="font-size: 20px;margin: 10px;color: black;text-align: center;"><strong>Register</strong></div>
 			<div id = "input-div">
 			<input id="text" type="text" name="role" placeholder="Role (doctor, patient)"><br><br>
-
 			<input id="text" type="text" name="username" placeholder="Username"><br><br>
 			<input id="text" type="password" name="password" placeholder="Password"><br><br>
 			<input id="button" type="submit" value="REGISTER"><br><br>

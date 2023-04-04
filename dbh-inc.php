@@ -1,4 +1,3 @@
-
 <?php    
     $servername = "discountclinic.mysql.database.azure.com";
     $username = "adminLogin";

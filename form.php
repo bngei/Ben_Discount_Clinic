@@ -179,7 +179,6 @@ session_start();
 
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
         $firstname = $_POST['firstname'];
         $middleInitial = $_POST['middle-initial'];
         $last_name = $_POST['last_name'];
@@ -190,15 +189,12 @@ session_start();
         $street = $_POST['street'];
         $city = $_POST['city'];
         $state = $_POST['state'];
-
         $zip = $_POST['zipcode'];
         $emergencyFirstName = $_POST['Emergencyfirst-name'];
         $emergencyLastName = $_POST['Emergencylast-name'];
         $relationship = $_POST['Relationship'];
         $emergencyPhone = $_POST['emergencyContactPhone'];
-
         $allergies = $_POST['allergies'];
-
         $emergencyMiddleInitial =  ' ';
 
 
@@ -222,7 +218,7 @@ session_start();
                 if (mysqli_query($conn, $sql_emergency)) {
                     mysqli_close($conn);
                     header("Location: " . $_SERVER['PHP_SELF']);
-                    header("Location: thankyouForm.php");
+                    header("Location: index.php");
                 } else {
                     echo "ERROR: Could not able to execute $sql_emergency. " . mysqli_error($conn);
                 }

@@ -37,6 +37,7 @@
 		<nav>
 			<ul>
 				<li class ="active"><a href="adminhomepage.php">Home</a></li>
+                <li><a href="admin_create_doctor.php">Create Doctor</a></li>
 				<li><a href="logout.php">Logout</a></li>
 			</ul>
 		</nav>

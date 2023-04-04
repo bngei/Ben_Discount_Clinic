@@ -1,8 +1,6 @@
 <?php
-
-ob_start();
-session_start();
-
+  ob_start();
+  session_start();
 ?>
 
 
@@ -14,20 +12,21 @@ session_start();
         </div>
         <nav>
           <ul>
-            <li><a href="patienthomepage.php">Home</a></li>
-            <li><a href="appointments.html">Appointments</a></li>
-            <li><a href="transactions.html">Transactions</a></li>
-            <li><a href="profile.html">Profile</a></li>
+            <li class ="active"><a href="index.php">Home</a></li>
+				    <li><a href="patient_profile.php">Profile</a></li>
+				    <li><a href="patientappointments.php">Schedule Appointment</a></li>
+        		<li><a href="transactions.php">Transactions</a></li>
+				    <li><a href="logout.php">Logout</a></li>
           </ul>
         </nav>
       </header>
 <head>
 
 	<title>Appointment Making System</title>
-	<link rel="stylesheet" href="patient_appointments_style.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
-  <script src="patient_appointments_script.js" defer></script>
+<script src="patient_appointments_script.js" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>

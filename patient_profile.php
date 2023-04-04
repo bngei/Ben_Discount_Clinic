@@ -59,7 +59,6 @@
 				<li><a href="patient_profile.php">Profile</a></li>
 				<li><a href="patientappointments.php">Schedule Appointment</a></li>
         		<li><a href="transactions.php">Transactions</a></li>
-				<li><a href ="form.php">Patient Form</a></li>
 				<li><a href="logout.php">Logout</a></li>
 			</ul>
 		</nav>
