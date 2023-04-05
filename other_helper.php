@@ -36,5 +36,4 @@ if($result && mysqli_num_rows($result) > 0)
 
 	echo "</select>";
 }
-
 ?>

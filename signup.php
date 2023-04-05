@@ -2,10 +2,7 @@
  	session_start();
  	ob_start();
 	include("functions.php");
-
 	include("dbh-inc.php");
-
-	
 
 	if($_SERVER['REQUEST_METHOD'] == "POST")
 	{
@@ -16,8 +13,8 @@
 		if(!empty($role) && !empty($username) && !empty($password) && !is_numeric($username))
 		{
 			$checking_query = "SELECT * FROM user WHERE username = '$username' LIMIT 1";
-
 			$result =  mysqli_query($conn, $checking_query);
+
 
 			if($result && mysqli_num_rows($result) > 0){
 				echo "Username already taken";
@@ -25,11 +22,9 @@
 			else{
 			$query = "INSERT INTO user (role,username,password) VALUES ('$role','$username','$password')";
 			mysqli_query($conn, $query);
-			// NEWCODE
-
 			$select_query = "SELECT * FROM user WHERE username = '$username' LIMIT 1";
-
 			$result = mysqli_query($conn, $select_query);
+
 
 			if($result){
 				if($result && mysqli_num_rows($result) > 0)
@@ -41,19 +36,8 @@
 						header("Location: form.php");
 						die;
 					}
-					
 				}
 			}
-			// NEWCODE
-
-
-			// if($role == 'patient')
-			// 	header("Location: form.php");
-			// header("Location: form.php");
-
-			//if($role == 'doctor')
-				//header("Location: doctor_form.php");
-
 			die;
 			}
 		}
@@ -62,17 +46,14 @@
 			echo "Missing or invalid fields";
 		}
 	}
-
 ?>
-
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Register</title>
+<title>Register</title>
 </head>
 <body>
-
 	<style type="text/css">
 
 		#text{
@@ -135,10 +116,8 @@
 		}
 		
 	</style>
-
 	<div id="box-parent">
 	<div id = "box">
-
 		<form method="post">
 			<div style="font-size: 20px;margin: 10px;color: black;text-align: center;"><strong>Register</strong></div>
 			<div id = "input-div">

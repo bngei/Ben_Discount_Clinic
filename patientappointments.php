@@ -202,41 +202,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $patient_id = $patient_data['patient_id'];
     
     $sql = "INSERT INTO appointment (patient_id, doctor_id, office_id, time, date, deleted) VALUES ('$patient_id','$doctor_id','$office_id','$time','$date', 0)";
-            if (mysqli_query($conn, $sql)) 
+        if (mysqli_query($conn, $sql)) 
+        {
+            $appointment_status = "SELECT * FROM approval WHERE specialist_doctor_id = '$doctor_id' AND patient_id = '$patient_id' AND approval_bool=1";
+            //echo $sql_doctor;
+            $result = mysqli_query($conn, $appointment_status);
+            if ($result && mysqli_num_rows($result) > 0) 
             {
-                  $appointment_status = "SELECT * FROM approval WHERE specialist_doctor_id = '$doctor_id' AND patient_id = '$patient_id' AND approval_bool=1";
-                  //echo $sql_doctor;
-                  $result = mysqli_query($conn, $appointment_status);
-                  if ($result && mysqli_num_rows($result) > 0) 
-                  {
-                    echo "Thank you for scheduling your appointment!";
-                  } 
-                  else 
-                  {
-                        $sql_specialist = "SELECT * FROM doctor WHERE doctor_id = '$doctor_id' AND specialty <> 'primary'";
-                        $res = mysqli_query($conn, $sql_specialist);
-                        if ($res && mysqli_num_rows($res) > 0) 
-                        {
-                          echo "You need approval from a GP.";
-                        }
-                        
-                        else 
-                        {
-                          echo "Thank you for scheduling your appointment!";
-                        }
-
-                  }
-            }
+              echo "Thank you for scheduling your appointment!";
+            } 
             else 
             {
-              echo "You need approval from a GP.";
+                $sql_specialist = "SELECT * FROM doctor WHERE doctor_id = '$doctor_id' AND specialty <> 'primary'";
+                $res = mysqli_query($conn, $sql_specialist);
+                if ($res && mysqli_num_rows($res) > 0) 
+                {
+                  echo "You need approval from a GP.";
+                }
+                
+                else 
+                {
+                  echo "Thank you for scheduling your appointment!";
+                }
             }
+        }
+        else 
+        {
+          echo "You need approval from a GP.";
+        }
   } 
   else {
     echo "Patient not found";
   }
 } 
-
-
 ?>
-
