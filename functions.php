@@ -1,6 +1,4 @@
 <?php
-
-//function check_login($conn)
 function check_login($conn)
 {
 	if(isset($_SESSION['username']))
@@ -19,8 +17,6 @@ function check_login($conn)
 
 		}
 	}
-	//redirect to login
 	header("Location: login.php");
 	die;
-
 }

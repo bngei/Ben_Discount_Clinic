@@ -38,17 +38,14 @@
     else{
       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-
     xmlhttp.onreadystatechange = function() {
       if (this.readyState==4 && this.status==200) {
         document.getElementById('office').innerHTML = this.responseText;
       }
     }
-    //alert(str);
     xmlhttp.open("GET","helper.php?value="+str, true);
     xmlhttp.send();
   }
-
   function my_other_fun(str) {
     if(window.XMLHttpRequest) {
       xmlhttp = new XMLHttpRequest();
@@ -67,9 +64,7 @@
     xmlhttp.send();
 
   }
-
 </script>
-
 <body>
 
 
@@ -77,8 +72,6 @@
 	<div class="container">
 		<h2>Appointment Form</h2>
 		<form action="#" method="POST">
-
-
       <label for="date">Date:</label>
       <input type="date" id="date" name="date" required>
 
@@ -144,20 +137,15 @@
             <option value="WI">Wisconsin</option>
             <option value="WY">Wyoming</option>
         </select>
-
           <label for="office">Select an Office:</label>
 					<select id="office" name="office" onchange="my_other_fun(this.value);">
 						<option value="">Select location</option>
 					</select>
-
           <label for="doctor">Select a Doctor:</label>
           <select id="doctor" name="doctor" required>
             <option value="">Select doctor</option>
           </select>
-
           <div></div>
-
-
 			<button type="submit" value = "Submit" id="submitBtn">Submit</button>
 		</form>
 	</div>

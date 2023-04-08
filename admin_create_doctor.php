@@ -82,7 +82,6 @@ session_start();
         <label for="date-input">Date of Birth:</label>
         <input type="text" id="date-input" name="date-input" placeholder="MM/DD/YYYY"  pattern="\d{2}/\d{2}/\d{4}" required>
         <p id="error-message"></p>
-
         
         <label for="address_id">Pick An Office For This Doctor:</label>
         <select id="address_id" name="address_id" required>
@@ -104,14 +103,11 @@ session_start();
 					}
 				}
 	    	 ?>
-
 	    </select>
-
         <label for="specialty">Specialty:</label>
         <input type ="text" id = "specialty" name="specialty" required>
         <button type="submit" value="Submit">Submit</button>
     <form>
-
 <?php
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -140,6 +136,7 @@ session_start();
         $sql_doctor = "INSERT INTO discount_clinic.doctor (user_id, first_name, middle_initial, last_name, phone_number, gender, DOB, specialty, deleted) VALUES 
         ($new_user_id, '$firstname', '$middleInitial', '$last_name',  '$phone_number', '$gender', '$dob', '$specialty', 0)";
         mysqli_query($conn, $sql_doctor);
+
 
         $new_doctor_id_sql = "SELECT doctor_id FROM discount_clinic.doctor, discount_clinic.user WHERE doctor.user_id = user.user_id AND username = '$username'";
         $new_doctor_id_res = mysqli_query($conn, $new_doctor_id_sql);

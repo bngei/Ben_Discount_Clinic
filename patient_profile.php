@@ -12,7 +12,6 @@ FROM discount_clinic.patient, discount_clinic.emergency_contact, discount_clinic
 WHERE patient.patient_id = emergency_contact.patient_id AND user.user_id = patient.user_id AND patient.address_id = address.address_id AND doctor.doctor_id = patient.primary_doctor_id AND user.user_id = '$user_id'";
 
 
-
 $patient_result = mysqli_query($conn, $patient);
 
 if ($patient_result && mysqli_num_rows($patient_result) > 0) {
@@ -96,7 +95,6 @@ if ($patient_result && mysqli_num_rows($patient_result) > 0) {
 		}
 	</style>
 </head>
-
 <body>
 	<h2>Personal Information</h2>
 	<?php
@@ -154,6 +152,7 @@ if ($patient_result && mysqli_num_rows($patient_result) > 0) {
 </body>
 </html>
 
+
 <?php
 ob_start();
 include("dbh-inc.php");
@@ -165,11 +164,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $user_data = check_login($conn);
 $user_id_fk = $user_data['user_ID'];
 
+
 //get patient id using user id
 $sql = "SELECT patient_id FROM patient WHERE user_id = '$user_id_fk'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $patient_id_fk = $row['patient_id'];
+
 
 //get address id using user id
 $sql = "SELECT address_id FROM patient WHERE user_id = '$user_id_fk'";
@@ -263,49 +264,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			}
 			break;
 			//edit zip code
-			case "zip":
-				$sql = "UPDATE address SET zip = '$_POST[new_value]' WHERE address_id = '$address_id_fk'";
-				if (mysqli_query($conn, $sql)) {
-					echo "Record updated successfully";
-					header("Location: patient_profile.php");
-				} else {
-					echo "Error updating record: " . mysqli_error($conn);
-				}
-				break;
-				//edit emergency contact name
-			case "e_first_name":
-				$sql = "UPDATE emergency_contact SET e_first_name = '$_POST[new_value]' WHERE patient_id = '$patient_id_fk'";
-				if (mysqli_query($conn, $sql)) {
-					echo "Record updated successfully";
-					header("Location: patient_profile.php");
-				} else {
-					echo "Error updating record: " . mysqli_error($conn);
-				}
-				break;
-				//edit emergency middle initial
-			case "e_middle_initial":
-				$sql = "UPDATE emergency_contact SET e_middle_initial = '$_POST[new_value]' WHERE patient_id = '$patient_id_fk'";
-				if (mysqli_query($conn, $sql)) {
-					echo "Record updated successfully";
-					header("Location: patient_profile.php");
-				} else {
-					echo "Error updating record: " . mysqli_error($conn);
-				}
-				break;
-	
-	
-	
-			//edit emergency last name
-			case "e_last_name":
-				$sql = "UPDATE emergency_contact SET e_last_name = '$_POST[new_value]' WHERE patient_id = '$patient_id_fk'";
-				if (mysqli_query($conn, $sql)) {
-					echo "Record updated successfully";
-					header("Location: patient_profile.php");
-				} else {
-					echo "Error updating record: " . mysqli_error($conn);
-				}
-				break;
-						//edit emergency phone number
+		case "zip":
+			$sql = "UPDATE address SET zip = '$_POST[new_value]' WHERE address_id = '$address_id_fk'";
+			if (mysqli_query($conn, $sql)) {
+				echo "Record updated successfully";
+				header("Location: patient_profile.php");
+			} else {
+				echo "Error updating record: " . mysqli_error($conn);
+			}
+			break;
+			//edit emergency contact name
+		case "e_first_name":
+			$sql = "UPDATE emergency_contact SET e_first_name = '$_POST[new_value]' WHERE patient_id = '$patient_id_fk'";
+			if (mysqli_query($conn, $sql)) {
+				echo "Record updated successfully";
+				header("Location: patient_profile.php");
+			} else {
+				echo "Error updating record: " . mysqli_error($conn);
+			}
+			break;
+			//edit emergency middle initial
+		case "e_middle_initial":
+			$sql = "UPDATE emergency_contact SET e_middle_initial = '$_POST[new_value]' WHERE patient_id = '$patient_id_fk'";
+			if (mysqli_query($conn, $sql)) {
+				echo "Record updated successfully";
+				header("Location: patient_profile.php");
+			} else {
+				echo "Error updating record: " . mysqli_error($conn);
+			}
+			break;
+
+
+
+		//edit emergency last name
+		case "e_last_name":
+			$sql = "UPDATE emergency_contact SET e_last_name = '$_POST[new_value]' WHERE patient_id = '$patient_id_fk'";
+			if (mysqli_query($conn, $sql)) {
+				echo "Record updated successfully";
+				header("Location: patient_profile.php");
+			} else {
+				echo "Error updating record: " . mysqli_error($conn);
+			}
+			break;
+					//edit emergency phone number
 		case "ec_phone_number":
 			$sql = "UPDATE emergency_contact SET phone_number = '$_POST[new_value]' WHERE patient_id = '$patient_id_fk'";
 			if (mysqli_query($conn, $sql)) {

@@ -2,15 +2,12 @@
 ob_start();
 session_start();
 
-
-	// include("connection.php");
 	include("dbh-inc.php");
 	include("functions.php");
 
 
 	if($_SERVER['REQUEST_METHOD'] == "POST")
 	{
-		//something was posted
 		$role = $_POST['role'];
 		$username = $_POST['username'];
 		$password = $_POST['password'];

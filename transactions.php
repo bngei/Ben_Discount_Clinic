@@ -83,38 +83,40 @@ session_start();
 		  
 
 			$patient_info = $conn->query($query_patient_id);
-			$row = $patient_info->fetch_assoc();
-			$patient_id = $row["patient_id"];
-			$appointment_id = $row["appointment_id"];
 
-		  
-			$query_total_owe = "SELECT total_owe FROM discount_clinic.patient WHERE patient_id = $patient_id";
-			$result_total_owe = $conn->query($query_total_owe);
-			$row_total_owe = $result_total_owe->fetch_assoc();
-			$total_owe = $row_total_owe["total_owe"];
-		  
-			// Check if total_owe is greater than 0
-			if($total_owe > 0) {
-				$insertQ = "INSERT INTO discount_clinic.transaction (patient_id, appointment_id, amount, pay) 
-					VALUES ($patient_id, $appointment_id, $moneyAmountInputted, 1)";
-				mysqli_query($conn, $insertQ);
-			}
-			else {
-				echo 'Invalid Payment: Total Amount Owed is Zero';
+			if($patient_info->num_rows > 0) {
+				$row = $patient_info->fetch_assoc();
+				$patient_id = $row['patient_id'];
+				$appointment_id = $row["appointment_id"];
+
+			
+				$query_total_owe = "SELECT total_owe FROM discount_clinic.patient WHERE patient_id = $patient_id";
+				$result_total_owe = $conn->query($query_total_owe);
+				$row_total_owe = $result_total_owe->fetch_assoc();
+				$total_owe = $row_total_owe["total_owe"];
+			
+				// Check if total_owe is greater than 0
+				if($total_owe > 0 && $total_owe - $moneyAmountInputted >= 0) {
+					$insertQ = "INSERT INTO discount_clinic.transaction (patient_id, appointment_id, amount, pay) 
+						VALUES ($patient_id, $appointment_id, $moneyAmountInputted, 1)";
+					mysqli_query($conn, $insertQ);
+				}
+				else {
+					echo 'Invalid Payment: Payment too large.';
+				}
 			}
 		}
 		
 
 		$query = 
 		"SELECT * 
-		FROM discount_clinic.transaction, discount_clinic.appointment, discount_clinic.patient, discount_clinic.user
-		WHERE transaction.appointment_id = appointment.appointment_id AND patient.patient_id = appointment.patient_id AND patient.user_id = user.user_id AND user.username = '$username'
-		ORDER BY appointment.date ASC";
+		FROM discount_clinic.patient, discount_clinic.user
+		WHERE patient.user_id = user.user_id AND user.username = '$username'";
 
 		$result = $conn->query($query);
 		$row = $result->fetch_assoc();
 
-		echo "<td>" . $row["total_owe"] . "</td>";
+		echo "<td>" . $row['total_owe'] . "</td>";
 	 ?>
 	</table>
     <h2> All Transactions </h2>
@@ -133,10 +135,11 @@ session_start();
 
 			
 			
-			$query = "SELECT * 
-			FROM discount_clinic.transaction, discount_clinic.appointment, discount_clinic.patient, discount_clinic.user
-			WHERE transaction.appointment_id = appointment.appointment_id AND patient.patient_id = appointment.patient_id AND patient.user_id = user.user_id AND user.username = '$username'
-			ORDER BY appointment.date ASC";
+			$query = 
+		"SELECT * 
+		FROM discount_clinic.transaction, discount_clinic.appointment, discount_clinic.patient, discount_clinic.user
+		WHERE transaction.appointment_id = appointment.appointment_id AND patient.patient_id = appointment.patient_id AND patient.user_id = user.user_id AND user.username = '$username'
+		ORDER BY appointment.date ASC";
 
 			$result = $conn->query($query);
 

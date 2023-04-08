@@ -5,8 +5,6 @@ session_start();
 
 <!DOCTYPE html>
 <html lang="en">
-
-
 <script>
   
   function my_fun(str) {
@@ -22,7 +20,6 @@ session_start();
         document.getElementById('office').innerHTML = this.responseText;
       }
     }
-    //alert(str);
     xmlhttp.open("GET","helper.php?value="+str, true);
     xmlhttp.send();
   }
@@ -40,7 +37,6 @@ session_start();
         document.getElementById('doctor').innerHTML = this.responseText;
       }
     }
-    //alert(str);
     xmlhttp.open("GET","helper_ben.php?value="+str, true);
     xmlhttp.send();
 
@@ -104,8 +100,6 @@ session_start();
         <label for="last_name">Last Name:</label>
         <input type="text" id="last-name" name="last_name" required>
 
-
-
         <label for="gender">Gender:</label>
         <label for="gender-male"><input type="radio" id="gender-male" name="gender" value="M" required>Male</label>
         <label for="gender-female"><input type="radio" id="gender-female" name="gender" value="F" required>Female</label>
@@ -115,11 +109,9 @@ session_start();
         <input type="text" id="date-input" name="date-input" placeholder="MM/DD/YYYY" pattern="\d{2}/\d{2}/\d{4}" required>
         <p id="error-message"></p>
 
-
         <label for="phone">Phone number:</label>
         <input type="text" id="patientphone" name="phone" placeholder="123-456-7890" pattern="\d{3}-\d{3}-\d{4}" required>
         <span id="phone-error"></span>
-
 
         <h2>Patient Address</h2>
         <label for="street">Street:</label>
@@ -279,9 +271,9 @@ session_start();
           <button type="submit" value="Submit">Submit</button>
 
         <form>
+
+
 <?php
-
-
     include("dbh-inc.php");
     include("functions.php");
 
@@ -308,7 +300,6 @@ session_start();
         $allergies = $_POST['allergies'];
         $emergencyMiddleInitial =  ' ';
         $primary_doctor_id = $_POST['doctor'];
-
 
 
         $sql_address = "INSERT INTO address (street_address, city, state, zip, deleted) VALUES ('$street', '$city', '$state', '$zip', 0)";
@@ -342,7 +333,6 @@ session_start();
         }
         mysqli_close($conn);
     }
-
     ?>
 </body>
 </html>

@@ -76,9 +76,9 @@
     </tr>
   </thead>
   <tbody>
-	<?php
-		
 
+
+<?php
 		$TEST = $user_data['username'];
 		$query = "SELECT user_id FROM user WHERE username = '$TEST'";
 		$result = mysqli_query($conn, $query);
@@ -88,10 +88,8 @@
 		} 
 
 
-
 		$query = "SELECT patient_id FROM patient WHERE user_id = '$user_id'";
 		$result = mysqli_query($conn, $query);
-
 		if($result && mysqli_num_rows($result) > 0) {
 			$patient_data = mysqli_fetch_assoc($result);
 			$patient_id = $patient_data['patient_id'];
@@ -101,7 +99,6 @@
 		$sql = "SELECT * 
 		FROM discount_clinic.appointment, discount_clinic.office, discount_clinic.address, discount_clinic.doctor
 		WHERE patient_id = '$patient_id' AND office.address_id = address.address_id AND appointment.office_id = office.office_id AND appointment.doctor_id = doctor.doctor_id";
-
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -117,7 +114,7 @@
 		} else {
 			echo "<tr><td colspan='5'>No appointments found.</td></tr>";
 		}
-		
+
 		$conn->close();
 	?>
   </tbody>
