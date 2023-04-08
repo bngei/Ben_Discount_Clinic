@@ -98,9 +98,6 @@
 		}
 		
 
-		$sql = "SELECT * FROM appointment WHERE patient_id = '$patient_id' AND deleted = FALSE";
-
-
 		$sql = "SELECT * 
 		FROM discount_clinic.appointment, discount_clinic.office, discount_clinic.address, discount_clinic.doctor
 		WHERE patient_id = '$patient_id' AND office.address_id = address.address_id AND appointment.office_id = office.office_id AND appointment.doctor_id = doctor.doctor_id";

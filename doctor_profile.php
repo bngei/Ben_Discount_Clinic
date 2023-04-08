@@ -13,7 +13,6 @@
 				WHERE doctor.user_id = user.user_id AND user.username = '$username'";
 	 
    	
-
     $patient_result = mysqli_query($conn, $patient);
 
 	if($patient_result && mysqli_num_rows($patient_result) > 0) {
@@ -25,8 +24,6 @@
 		$specialty = $user_data['specialty'];
 		$phone_number = $user_data['phone_number'];
 		$DOB = $user_data['DOB'];
-
-
 	} 
 
 	$sql = "SELECT * 
@@ -101,5 +98,96 @@
 			echo "<tr><td colspan='5'>This doctor does not work at any offices.</td></tr>";
 		}
 	  ?>
+	  <h2>Edit Information</h2>
+	<form method="post" action="" onsubmit="window.location.reload()">
+		<input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+		<label for="field">Select field to update:</label>
+		<select id="field" name="field">
+			<option value="first_name">First Name</option>
+			<option value="middle_initial">Middle Initial</option>
+			<option value="last_name">Last Name</option>
+			<option value="gender">Gender</option>
+			<option value="phone_number">Phone Number</option>
+			<option value="specialty">Specialty</option>
+		</select>
+		<label for="new_value">Enter new value:</label>
+		<input type="text" id="new_value" name="new_value">
+		<input type="submit" value="Update">
+	</form>
 </body>
 </html>
+
+<?php	
+	ob_start();
+	include("dbh-inc.php");
+	$user_data = check_login($conn);
+	$user_id_fk = $user_data['user_ID'];
+
+	//get patient id using user id
+	$sql = "SELECT doctor_id FROM doctor WHERE user_id = '$user_id_fk'";
+	$result = mysqli_query($conn, $sql);
+	$row = mysqli_fetch_assoc($result);
+	$doctor_id_fk = $row['doctor_id'];
+
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		$field = $_POST['field'];
+		switch ($field) {
+			case "first_name":
+				$sql = "UPDATE doctor SET first_name = '$_POST[new_value]' WHERE doctor_id = '$doctor_id_fk'";
+				if (mysqli_query($conn, $sql)) {
+					echo "Record updated successfully";
+					header("Refresh:0");
+				} else {
+					echo "Error updating record: " . mysqli_error($conn);
+				}
+				header("Refresh:0");
+				break;
+			case "middle_initial":
+				$sql = "UPDATE doctor SET middle_initial = '$_POST[new_value]' WHERE doctor_id = '$doctor_id_fk'";
+				if (mysqli_query($conn, $sql)) {
+					echo "Record updated successfully";
+					header("Location: doctor_profile.php");
+				} else {
+					echo "Error updating record: " . mysqli_error($conn);
+				}
+				break;
+			case "last_name":
+				$sql = "UPDATE doctor SET last_name = '$_POST[new_value]' WHERE doctor_id = '$doctor_id_fk'";
+				if (mysqli_query($conn, $sql)) {
+					echo "Record updated successfully";
+					header("Location: doctor_profile.php");
+				} else {
+					echo "Error updating record: " . mysqli_error($conn);
+				}
+				break;
+			case "gender":
+				$sql = "UPDATE doctor SET gender = '$_POST[new_value]' WHERE doctor_id = '$doctor_id_fk'";
+				if (mysqli_query($conn, $sql)) {
+					echo "Record updated successfully";
+					header("Location: doctor_profile.php");
+				} else {
+					echo "Error updating record: " . mysqli_error($conn);
+				}
+				break;
+			case "phone_number":
+				$sql = "UPDATE doctor SET phone_number = '$_POST[new_value]' WHERE doctor_id = '$doctor_id_fk'";
+				if (mysqli_query($conn, $sql)) {
+					echo "Record updated successfully";
+					header("Location: doctor_profile.php");
+				} else {
+					echo "Error updating record: " . mysqli_error($conn);
+				}
+				break;
+			case "specialty":
+				$sql = "UPDATE specialty SET specialty = '$_POST[new_value]' WHERE doctor_id = '$doctor_id_fk'";
+				if (mysqli_query($conn, $sql)) {
+					echo "Record updated successfully";
+					header("Location: doctor_profile.php");
+				} else {
+					echo "Error updating record: " . mysqli_error($conn);
+				}
+				break;
+		}
+	}
+	ob_flush();
+?>

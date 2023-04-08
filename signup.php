@@ -6,11 +6,10 @@
 
 	if($_SERVER['REQUEST_METHOD'] == "POST")
 	{
-		$role = $_POST['role'];
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 
-		if(!empty($role) && !empty($username) && !empty($password) && !is_numeric($username))
+		if(!empty($username) && !empty($password) && !is_numeric($username))
 		{
 			$checking_query = "SELECT * FROM user WHERE username = '$username' LIMIT 1";
 			$result =  mysqli_query($conn, $checking_query);
@@ -20,7 +19,7 @@
 				echo "Username already taken";
 			}
 			else{
-			$query = "INSERT INTO user (role,username,password) VALUES ('$role','$username','$password')";
+			$query = "INSERT INTO user (role,username,password) VALUES ('patient','$username','$password')";
 			mysqli_query($conn, $query);
 			$select_query = "SELECT * FROM user WHERE username = '$username' LIMIT 1";
 			$result = mysqli_query($conn, $select_query);
@@ -30,7 +29,7 @@
 				if($result && mysqli_num_rows($result) > 0)
 				{
 					$user_data = mysqli_fetch_assoc($result);
-					if($user_data['password'] === $password && $user_data['role'] === $role)
+					if($user_data['password'] === $password)
 					{
 						$_SESSION['username'] = $user_data['username'];
 						header("Location: form.php");
@@ -121,7 +120,6 @@
 		<form method="post">
 			<div style="font-size: 20px;margin: 10px;color: black;text-align: center;"><strong>Register</strong></div>
 			<div id = "input-div">
-			<input id="text" type="text" name="role" placeholder="Role (doctor, patient)"><br><br>
 			<input id="text" type="text" name="username" placeholder="Username"><br><br>
 			<input id="text" type="password" name="password" placeholder="Password"><br><br>
 			<input id="button" type="submit" value="REGISTER"><br><br>

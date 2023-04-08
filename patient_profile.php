@@ -7,9 +7,9 @@ include("functions.php");
 $user_data = check_login($conn);
 $user_id = $user_data['user_ID'];
 
-$patient = "SELECT first_name, middle_initial, last_name, gender, patient.phone_number AS patient_phone_number, DOB, total_owe, e_first_name, e_middle_initial, e_last_name, emergency_contact.phone_number AS ec_phone_number, relationship, street_address, zip, state, city
-	FROM discount_clinic.patient, discount_clinic.emergency_contact, discount_clinic.user, discount_clinic.address
-	WHERE patient.patient_id = emergency_contact.patient_id AND user.user_id = patient.user_id AND patient.address_id = address.address_id AND user.user_id = '$user_id'";
+$patient = "SELECT patient.first_name AS patient_first_name, patient.middle_initial AS patient_middle_initial, patient.last_name AS patient_last_name, patient.gender AS patient_gender, patient.phone_number AS patient_phone_number, patient.DOB AS patient_dob, total_owe, e_first_name, e_middle_initial, e_last_name, emergency_contact.phone_number AS ec_phone_number, relationship, street_address, zip, state, city, doctor.first_name AS doctor_first_name, doctor.middle_initial AS doctor_middle_intital, doctor.last_name AS doctor_last_name, doctor.phone_number AS doctor_phone_number, specialty
+FROM discount_clinic.patient, discount_clinic.emergency_contact, discount_clinic.user, discount_clinic.address, discount_clinic.doctor
+WHERE patient.patient_id = emergency_contact.patient_id AND user.user_id = patient.user_id AND patient.address_id = address.address_id AND doctor.doctor_id = patient.primary_doctor_id AND user.user_id = '$user_id'";
 
 
 
@@ -17,12 +17,12 @@ $patient_result = mysqli_query($conn, $patient);
 
 if ($patient_result && mysqli_num_rows($patient_result) > 0) {
 	$user_data = mysqli_fetch_assoc($patient_result);
-	$user_first_name = $user_data['first_name'];
-	$user_middle_initial =  $user_data['middle_initial'];
-	$user_last_name =  $user_data['last_name'];
-	$gender = $user_data['gender'];
+	$user_first_name = $user_data['patient_first_name'];
+	$user_middle_initial =  $user_data['patient_middle_initial'];
+	$user_last_name =  $user_data['patient_last_name'];
+	$gender = $user_data['patient_gender'];
 	$phone_number = $user_data['patient_phone_number'];
-	$DOB = $user_data['DOB'];
+	$DOB = $user_data['patient_dob'];
 	$total_owe = $user_data['total_owe'];
 
 
@@ -37,6 +37,12 @@ if ($patient_result && mysqli_num_rows($patient_result) > 0) {
 	$e_last_name = $user_data['e_last_name'];
 	$e_phone_number = $user_data['ec_phone_number'];
 	$relationship = $user_data['relationship'];
+
+	$doctor_first_name = $user_data['doctor_first_name'];
+	$doctor_mi = $user_data['doctor_middle_intital'];
+	$doctor_last_name = $user_data['doctor_last_name'];
+	$doctor_phone_number = $user_data['doctor_phone_number'];
+	$specialty = $user_data['specialty'];
 }
 
 ?>
@@ -57,7 +63,6 @@ if ($patient_result && mysqli_num_rows($patient_result) > 0) {
 				<li><a href="patient_profile.php">Profile</a></li>
 				<li><a href="patientappointments.php">Schedule Appointment</a></li>
 				<li><a href="transactions.php">Transactions</a></li>
-				<li><a href="form.php">Patient Form</a></li>
 				<li><a href="logout.php">Logout</a></li>
 			</ul>
 		</nav>
@@ -110,6 +115,12 @@ if ($patient_result && mysqli_num_rows($patient_result) > 0) {
 	echo "Phone Number: " . $e_phone_number . "<br>";
 	echo "Relationship: " . $relationship . "<br>";
 	?>
+	<h2>Primary Doctor Information</h2>
+	<?php	
+		echo "Primary Doctor Name: " . $doctor_first_name . " " . $doctor_mi . " " . $doctor_last_name . "<br>";
+		echo "Phone Number: " . $doctor_phone_number . "<br>";
+		echo "Specialty: " . $specialty . "<br>";
+	?>
 	<?php
 	if (!isset($_SESSION['csrf_token'])) {
 		$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -126,7 +137,6 @@ if ($patient_result && mysqli_num_rows($patient_result) > 0) {
 			<option value="gender">Gender</option>
 			<option value="phone_number">Phone Number</option>
 			<option value="DOB">Date of Birth</option>
-			<option value="total_owe">Total Owed</option>
 			<option value="street_address">Street Address</option>
 			<option value="city">City</option>
 			<option value="state">State</option>

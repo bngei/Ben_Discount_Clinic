@@ -166,8 +166,6 @@
 
 
 <?php
-//ob_start();
-//session_start();
 
 include("dbh-inc.php");
 include("functions.php");
@@ -217,9 +215,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $res = mysqli_query($conn, $sql_specialist);
                 if ($res && mysqli_num_rows($res) > 0) 
                 {
-                  echo "You need approval from a GP.";
+                  echo "You need approval from a primary doctor.";
                 }
-                
+          
                 else 
                 {
                   echo "Thank you for scheduling your appointment!";
@@ -228,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         else 
         {
-          echo "You need approval from a GP.";
+          echo "You need approval from your primary doctor.";
         }
   } 
   else {

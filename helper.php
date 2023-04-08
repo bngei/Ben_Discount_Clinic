@@ -1,4 +1,3 @@
-
 <?php
 ob_start();
 session_start();
@@ -28,10 +27,6 @@ if($result && mysqli_num_rows($result) > 0)
 
 	    echo "<option value='$office_id'>$street $city $state $zip</option>";
 	}
-
-
 	echo "</select>";
 }
-
-
 ?>
