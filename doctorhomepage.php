@@ -29,9 +29,6 @@ session_start();
 	WHERE doctor.doctor_id = '$doctor_id' AND office.address_id = address.address_id AND appointment.office_id = office.office_id AND appointment.doctor_id = doctor.doctor_id AND patient.patient_id = appointment.patient_id";
 	$result = $conn->query($sql);
 
-
-	echo $result->num_row;
-
 ?>
 
 <!DOCTYPE html>
