@@ -93,6 +93,19 @@ if ($patient_result && mysqli_num_rows($patient_result) > 0) {
 			max-width: 800px;
 			padding: 20px;
 		}
+
+		a.delete {
+			display: inline-block;
+			padding: 10px 20px;
+			background-color: #f44336;
+			color: white;
+			text-align: center;
+			text-decoration: none;
+			font-size: 16px;
+			border-radius: 4px;
+			border: none;
+			cursor: pointer;
+		}
 	</style>
 </head>
 <body>
@@ -149,6 +162,12 @@ if ($patient_result && mysqli_num_rows($patient_result) > 0) {
 		<input type="text" id="new_value" name="new_value">
 		<input type="submit" value="Update">
 	</form>
+
+
+	<h2>Delete Account</h2>
+	<a class = "delete" href="delete_account.php">Click to Delete Account</a>
+
+
 </body>
 </html>
 

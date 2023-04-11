@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <link rel="stylesheet" type="text/css" href="styles.css">
 <head>
@@ -31,6 +31,7 @@
 			<li class ="active"><a href="doctorhomepage.php">Home</a></li>
 			<li><a href="doctor_profile.php">Profile</a></li>
 			<li><a href="doctorappointments.php">Appointments</a></li>
+			<li><a href="approval.php">Approvals</a></li>
 			<li><a href="logout.php">Logout</a></li>
 		</ul>
 	</nav>
@@ -95,7 +96,6 @@ session_start();
 		$doctor_id = $doctor_data['doctor_id'];
 	}
 	
-	$sql = "SELECT * FROM appointment WHERE doctor_id = '$doctor_id' AND deleted = FALSE";
 
 	$sql = "SELECT * 
 	FROM discount_clinic.appointment, discount_clinic.office, discount_clinic.address, discount_clinic.doctor

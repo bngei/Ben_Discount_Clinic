@@ -96,13 +96,13 @@ session_start();
 				$total_owe = $row_total_owe["total_owe"];
 			
 				// Check if total_owe is greater than 0
-				if($total_owe > 0 && $total_owe - $moneyAmountInputted >= 0) {
+				if($total_owe > 0 && $total_owe - $moneyAmountInputted >= 0 && $moneyAmountInputted > 0) {
 					$insertQ = "INSERT INTO discount_clinic.transaction (patient_id, appointment_id, amount, pay) 
 						VALUES ($patient_id, $appointment_id, $moneyAmountInputted, 1)";
 					mysqli_query($conn, $insertQ);
 				}
 				else {
-					echo 'Invalid Payment: Payment too large.';
+					echo 'Invalid Payment';
 				}
 			}
 		}
@@ -129,11 +129,6 @@ session_start();
 		</thead>
 		<tbody>
 			<?php
-			// replace with your database credentials
-			
-
-
-			
 			
 			$query = 
 		"SELECT * 

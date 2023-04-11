@@ -21,7 +21,18 @@
         </nav>
       </header>
 <head>
+  <style>
+    .container {
+      width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      margin-top: 60px;
 
+    }
+  </style>
 	<title>Appointment Making System</title>
 	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
@@ -74,13 +85,13 @@
 		<form action="#" method="POST">
       <label for="date">Date:</label>
       <input type="date" id="date" name="date" required>
-
+      <br>
       <label for="time">Time:</label>
             <select id="time" name="time" required>
             <option value=""></option>
             </select>
 
-
+      <br>
         <label for="state">Select a State:</label>
 				<select id="state" name="state" onchange="my_fun(this.value);">
 
@@ -137,15 +148,18 @@
             <option value="WI">Wisconsin</option>
             <option value="WY">Wyoming</option>
         </select>
+        <br>
           <label for="office">Select an Office:</label>
 					<select id="office" name="office" onchange="my_other_fun(this.value);">
 						<option value="">Select location</option>
 					</select>
+          <br>
           <label for="doctor">Select a Doctor:</label>
           <select id="doctor" name="doctor" required>
             <option value="">Select doctor</option>
           </select>
           <div></div>
+          <br>
 			<button type="submit" value = "Submit" id="submitBtn">Submit</button>
 		</form>
 	</div>
