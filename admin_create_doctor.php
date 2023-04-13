@@ -20,6 +20,7 @@ session_start();
                 <li class ="active"><a href="adminhomepage.php">Home</a></li>
                 <li><a href="admin_create_doctor.php">Create Doctor</a></li>
                 <li><a href="admin_create_office.php">Create Office</a></li>
+                <li><a href="admin_delete_entity.php">Delete Entity</a></li>
 				<li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
@@ -109,7 +110,6 @@ session_start();
         <button type="submit" value="Submit">Submit</button>
     <form>
 <?php
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -124,37 +124,40 @@ session_start();
         $specialty = $_POST['specialty'];
 
 
-        $sql_doctor_user = "INSERT INTO user (role, username, password) VALUES
-        ('doctor','$username', '$password')";
-        mysqli_query($conn, $sql_doctor_user);
-        $new_user_id_sql = "SELECT user_ID FROM discount_clinic.user WHERE username = '$username'";
-        $new_user_id_res = mysqli_query($conn, $new_user_id_sql);
-        $new_user_id_row = mysqli_fetch_assoc($new_user_id_res);
-        $new_user_id = $new_user_id_row['user_ID'];
-
-
-        $sql_doctor = "INSERT INTO discount_clinic.doctor (user_id, first_name, middle_initial, last_name, phone_number, gender, DOB, specialty, deleted) VALUES 
-        ($new_user_id, '$firstname', '$middleInitial', '$last_name',  '$phone_number', '$gender', '$dob', '$specialty', 0)";
-        mysqli_query($conn, $sql_doctor);
-
-
-        $new_doctor_id_sql = "SELECT doctor_id FROM discount_clinic.doctor, discount_clinic.user WHERE doctor.user_id = user.user_id AND username = '$username'";
-        $new_doctor_id_res = mysqli_query($conn, $new_doctor_id_sql);
-        $new_doctor_id_row = mysqli_fetch_assoc($new_doctor_id_res);
-        $new_doctor_id = $new_doctor_id_row['doctor_id'];
-        echo $new_doctor_id;
+        if(ctype_alnum($username) && ctype_alpha($firstname) && ctype_alpha($last_name) && ctype_alpha($middleInitial) && ctype_alpha($specialty) && ctype_alpha($gender)) {
+            $sql_doctor_user = "INSERT INTO user (role, username, password) VALUES
+            ('doctor','$username', '$password')";
+            mysqli_query($conn, $sql_doctor_user);
+            $new_user_id_sql = "SELECT user_ID FROM discount_clinic.user WHERE username = '$username'";
+            $new_user_id_res = mysqli_query($conn, $new_user_id_sql);
+            $new_user_id_row = mysqli_fetch_assoc($new_user_id_res);
+            $new_user_id = $new_user_id_row['user_ID'];
         
-        
-        $new_office_id_sql = "SELECT office_id FROM discount_clinic.office WHERE office.address_id = $address_id";
-        $new_office_id_res = mysqli_query($conn, $new_office_id_sql);
-        $new_office_id_row = mysqli_fetch_assoc($new_office_id_res);
-        $new_office_id = $new_office_id_row['office_id'];
-        echo $new_office_id;
-        $sql_office = "INSERT INTO discount_clinic.doctor_office (DID, OID) VALUES
-        ($new_doctor_id, $new_office_id)";
-        mysqli_query($conn, $sql_office);
+            
+            // inserting the doctor into the doctor table
+            $sql_doctor = "INSERT INTO discount_clinic.doctor (user_id, first_name, middle_initial, last_name, phone_number, gender, DOB, specialty, deleted) VALUES 
+            ($new_user_id, '$firstname', '$middleInitial', '$last_name',  '$phone_number', '$gender', '$dob', '$specialty', 0)";
+            mysqli_query($conn, $sql_doctor);
+       
 
-        mysqli_close($conn);
+            // inserting the doctor into the office
+            $new_doctor_id_sql = "SELECT doctor_id FROM discount_clinic.doctor, discount_clinic.user WHERE doctor.user_id = user.user_id AND username = '$username'";
+            $new_doctor_id_res = mysqli_query($conn, $new_doctor_id_sql);
+            $new_doctor_id_row = mysqli_fetch_assoc($new_doctor_id_res);
+            $new_doctor_id = $new_doctor_id_row['doctor_id'];
+            $new_office_id_sql = "SELECT office_id FROM discount_clinic.office WHERE office.address_id = $address_id";
+            $new_office_id_res = mysqli_query($conn, $new_office_id_sql);
+            $new_office_id_row = mysqli_fetch_assoc($new_office_id_res);
+            $new_office_id = $new_office_id_row['office_id'];
+            $sql_office = "INSERT INTO discount_clinic.doctor_office (DID, OID) VALUES
+            ($new_doctor_id, $new_office_id)";
+            mysqli_query($conn, $sql_office);
+
+
+            mysqli_close($conn);
+        } else {
+            echo "Invalid input";
+        }
     }
 ?>
 </body>

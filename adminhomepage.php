@@ -39,6 +39,7 @@
 				<li class ="active"><a href="adminhomepage.php">Home</a></li>
                 <li><a href="admin_create_doctor.php">Create Doctor</a></li>
                 <li><a href="admin_create_office.php">Create Office</a></li>
+				<li><a href="admin_delete_entity.php">Delete Entity</a></li>
 				<li><a href="logout.php">Logout</a></li>
 			</ul>
 		</nav>
@@ -62,7 +63,6 @@
 				WHERE office.address_id = address.address_id";
 				$office_address_result = mysqli_query($conn, $office_address_query);
 
-
 				if(mysqli_num_rows($office_address_result) > 0) {
 					while($row = mysqli_fetch_assoc($office_address_result)) {
 						echo "<option value='" . $row["address_id"]."'>" . $row["street_address"] . " " . $row["city"]  . " " . $row["state"] . " " . $row["zip"];
@@ -72,10 +72,10 @@
 
 	    </select>
 	    <input type="submit" value="Submit">
-    <form >
+    <form>
 </body>
-<h3>Appointments at this office</h3>
 <body>
+<h3>Appointments at this office</h3>
 	<table>
 		<thead>
 		    <tr>
@@ -89,33 +89,35 @@
 	  	<tbody>	
 	<?php
 	if(isset($_POST['address_id'])){
-    $address_id = $_POST['address_id'];
+		$address_id = $_POST['address_id'];
 
 
-    $appointment_query = "SELECT *
-	FROM discount_clinic.office, discount_clinic.address, discount_clinic.appointment, discount_clinic.patient
-	WHERE office.address_id = address.address_id AND patient.patient_id = appointment.patient_id AND address.address_id = '$address_id'";
-	$address_result =$conn->query($appointment_query);
-	
-    if ($address_result->num_rows > 0) {
-			while ($row = $address_result->fetch_assoc()) {
-				echo "<tr>";
-				echo "<td>" . $row['appointment_id'] . "</td>";
-				echo "<td>" . $row['first_name'] . " " . $row['last_name'] ."</td>";
-				echo "<td>" . $row['date'] . "</td>";
-				echo "<td>" . $row['time'] . "</td>";
-				echo "<td>" . $row['street_address'] . " " . $row['city'] . " " . $row['state'] . " " . $row['zip'] . "</td>";
-				echo "</tr>";
-			}
-		} else {
-			echo "<tr><td colspan='5'>No appointments found.</td></tr>";
-		}
-}
-
+		$appointment_query = "SELECT *
+		FROM discount_clinic.office, discount_clinic.address, discount_clinic.appointment, discount_clinic.patient
+		WHERE office.address_id = address.address_id AND patient.patient_id = appointment.patient_id AND address.address_id = '$address_id'";
+		$address_result = $conn->query($appointment_query);
 		
+		if ($address_result->num_rows > 0) {
+				while ($row = $address_result->fetch_assoc()) {
+					echo "<tr>";
+					echo "<td>" . $row['appointment_id'] . "</td>";
+					echo "<td>" . $row['first_name'] . " " . $row['last_name'] ."</td>";
+					echo "<td>" . $row['date'] . "</td>";
+					echo "<td>" . $row['time'] . "</td>";
+					echo "<td>" . $row['street_address'] . " " . $row['city'] . " " . $row['state'] . " " . $row['zip'] . "</td>";
+					echo "</tr>";
+				}
+			} else {
+				echo "<tr><td colspan='6'>No appointments found.</td></tr>";
+			}
+	} else {
+		echo "<tr><td colspan='6'>No appointments found.</td></tr>";
+	}
+
 	?>
 	  	</tbody>
 	</table>
+	<br>
 	<h3>Patients at this office</h3>
 	<table>
 		<thead>
@@ -130,12 +132,15 @@
 	  	</thead>
 	  	<tbody>
 	  		<?php 
-	  			$patient_query = "SELECT street_address, city, state, zip, patient.patient_id, first_name, middle_initial, last_name, gender, patient.phone_number AS patient_phone_number, DOB, emergency_contact.phone_number AS e_phone_number
-					FROM discount_clinic.office, discount_clinic.address, discount_clinic.patient, discount_clinic.emergency_contact
-					WHERE office.address_id = address.address_id AND emergency_contact.patient_id = patient.patient_id AND address.address_id = '$address_id'";
-				$patient_result = $conn->query($patient_query);
+				if(isset($_POST['address_id'])){
+					echo $address_id;
+					$address_id = $_POST['address_id'];
+					$patient_query = "SELECT street_address, city, state, zip, patient.patient_id, first_name, middle_initial, last_name, gender, patient.phone_number AS patient_phone_number, DOB, emergency_contact.phone_number AS e_phone_number
+						FROM discount_clinic.office, discount_clinic.address, discount_clinic.patient, discount_clinic.emergency_contact
+						WHERE office.address_id = address.address_id AND emergency_contact.patient_id = patient.patient_id AND address.address_id = '$address_id'";
+					$patient_result = $conn->query($patient_query);
 
-				if ($patient_result->num_rows > 0) {
+					if ($patient_result->num_rows > 0) {
 						while ($row = $patient_result->fetch_assoc()) {
 							echo "<tr>";
 							echo "<td>" . $row['patient_id'] . "</td>";
@@ -147,13 +152,15 @@
 							echo "</tr>";
 						}
 					} else {
-						echo "<tr><td colspan='5'>No appointments found.</td></tr>";
+						echo "<tr><td colspan='6'>No patients found.</td></tr>";
 					}
-					
+				} else {
+					echo "<tr><td colspan='6'>No patients found.</td></tr>";
+				}
 	  		?>
 	  	</tbody>
 	</table>
-
+	<br>
 	<h3>Doctors at this Office</h3>
 	<table>
 		<thead>
@@ -168,23 +175,33 @@
 	  	</thead>
 	  	<tbody>
 	  		<?php 
-	  			$doctor_query = "SELECT *
-				FROM discount_clinic.office, discount_clinic.address, discount_clinic.doctor
-				WHERE office.address_id = address.address_id AND address.address_id = '$address_id'";
-				$doctor_result = $conn->query($doctor_query);
+				if(isset($_POST['address_id'])){
+					$address_id = $_POST['address_id'];
+					$doctor_query = "SELECT *
+					FROM discount_clinic.office, discount_clinic.address, discount_clinic.doctor
+					WHERE office.address_id = address.address_id AND address.address_id = '$address_id'";
+					$doctor_result = $conn->query($doctor_query);
 
-				if($doctor_result->num_rows > 0) {
-					while ($row = $doctor_result->fetch_assoc()) {
-						echo "<tr>";
-						echo "<td>" . $row['doctor_id'] . "</td>";
-						echo "<td>" . $row['first_name'] . " " . $row['middle_initial'] . " " . $row['last_name'] . "</td>";
-						echo "<td>" . $row['specialty'] . "</td>";
-						echo "<td>" . $row['DOB'] . "</td>";
-						echo "<td>" . $row['gender'] . "</td>";
-						echo "<td>" . $row['phone_number'] . "</td>";
+					if($doctor_result->num_rows > 0) {
+						while ($row = $doctor_result->fetch_assoc()) {
+							echo "<tr>";
+							echo "<td>" . $row['doctor_id'] . "</td>";
+							echo "<td>" . $row['first_name'] . " " . $row['middle_initial'] . " " . $row['last_name'] . "</td>";
+							echo "<td>" . $row['specialty'] . "</td>";
+							echo "<td>" . $row['DOB'] . "</td>";
+							echo "<td>" . $row['gender'] . "</td>";
+							echo "<td>" . $row['phone_number'] . "</td>";
+						}
+					} else {
+						echo "<tr><td colspan='6'>No patients found.</td></tr>";
 					}
+
+
+					
+				} else {
+					echo "<tr><td colspan='6'>No patients found.</td></tr>";
 				}
-                $conn->close();
+				
 	  		 ?>
 	  	</tbody>
 	</table>
@@ -200,6 +217,5 @@
 		WHERE office.address_id = address.address_id AND address.address_id = '$address_id'";
 		$address_result =$conn->query($address_query);
 	}
-	
-	echo $result->num_rows;
+	$conn->close();
 ?>

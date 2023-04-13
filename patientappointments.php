@@ -57,6 +57,9 @@
     xmlhttp.open("GET","helper.php?value="+str, true);
     xmlhttp.send();
   }
+
+
+  
   function my_other_fun(str) {
     if(window.XMLHttpRequest) {
       xmlhttp = new XMLHttpRequest();
@@ -70,7 +73,6 @@
         document.getElementById('doctor').innerHTML = this.responseText;
       }
     }
-    //alert(str);
     xmlhttp.open("GET","other_helper.php?value="+str, true);
     xmlhttp.send();
 
