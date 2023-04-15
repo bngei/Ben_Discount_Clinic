@@ -81,7 +81,8 @@
 			<th>Doctor Name</th>
 			<th>Date</th>
 			<th>Time</th>
-			<th> Office Location</th>
+			<th>Office Location</th>
+			<th>Status</th>
 			<th>Cancel Appointment</th>
 		</tr>
 	</thead>
@@ -109,7 +110,8 @@
 
 		$sql = "SELECT * 
 		FROM discount_clinic.appointment, discount_clinic.office, discount_clinic.address, discount_clinic.doctor
-		WHERE patient_id = '$patient_id' AND office.address_id = address.address_id AND appointment.office_id = office.office_id AND appointment.doctor_id = doctor.doctor_id AND appointment.cancelled = 0";
+		WHERE patient_id = '$patient_id' AND office.address_id = address.address_id AND appointment.office_id = office.office_id AND appointment.doctor_id = doctor.doctor_id AND appointment.cancelled = 0
+		ORDER BY date, time";
 
 		$result = $conn->query($sql);
 
@@ -121,19 +123,24 @@
 				echo "<td>" . $row['date'] . "</td>";
 				echo "<td>" . $row['time'] . "</td>";
 				echo "<td>" . $row['street_address'] . " " . $row['city'] . " " . $row['state'] . " " . $row['zip'] . "</td>";
+				if($row['deleted'] == 1) {
+					echo "<td>Needs Approval</td>";
+				} else {
+					echo "<td>Approved</td>";
+				}
 				echo "<td>";
 
-			echo "<form method='POST' action= 'patienthomepage.php'>";
-			echo "<input type='hidden' name='appointment_id' value='" . $row['appointment_id'] . "'>";
+				echo "<form method='POST' action= 'patienthomepage.php'>";
+				echo "<input type='hidden' name='appointment_id' value='" . $row['appointment_id'] . "'>";
 
 				// Add an if statement to check if the cancel button has been clicked
 				if (isset($_POST['cancel'])) {
-					header("refresh:0; url=patienthomepage.php"); //THIS MADE IT WORK
+					header("refresh:0; url=patienthomepage.php"); 
 
 					$appointment_id = $_POST['appointment_id'];
 					$query = "UPDATE appointment SET cancelled = TRUE WHERE appointment_id = '$appointment_id'";
 					mysqli_query($conn, $query);
-					header("patienthomepage.php"); //THIS MADE IT WORK
+					header("patienthomepage.php");
 
 				} else {
 					echo "<button type='submit' name='cancel'>Cancel</button>";
@@ -148,7 +155,6 @@
 		} else {
 			echo "<tr><td colspan='6'>No appointments found.</td></tr>";
 		}
-		//header("Refresh:0;");
 
 		$conn->close();
 		?>

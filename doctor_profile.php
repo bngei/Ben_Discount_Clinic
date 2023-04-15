@@ -28,7 +28,7 @@
 
 	$sql = "SELECT * 
 	FROM discount_clinic.doctor_office, discount_clinic.office, discount_clinic.address, discount_clinic.doctor
-	WHERE doctor_office.OID = office.office_id AND office.address_id = address.address_id AND doctor.doctor_id = doctor_office.DID AND doctor.doctor_id = 3";
+	WHERE doctor_office.OID = office.office_id AND office.address_id = address.address_id AND doctor.doctor_id = doctor_office.DID AND doctor.doctor_id = $user_id";
 	$result = $conn->query($sql);
 ?>
 

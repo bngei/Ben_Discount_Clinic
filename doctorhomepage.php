@@ -26,7 +26,8 @@ session_start();
 
 	$sql = "SELECT * 
 	FROM discount_clinic.appointment, discount_clinic.office, discount_clinic.address, discount_clinic.doctor, discount_clinic.patient
-	WHERE doctor.doctor_id = '$doctor_id' AND office.address_id = address.address_id AND appointment.office_id = office.office_id AND appointment.doctor_id = doctor.doctor_id AND patient.patient_id = appointment.patient_id";
+	WHERE doctor.doctor_id = '$doctor_id' AND office.address_id = address.address_id AND appointment.office_id = office.office_id AND appointment.doctor_id = doctor.doctor_id AND patient.patient_id = appointment.patient_id AND appointment.deleted = FALSE
+	ORDER BY appointment.date, appointment.time";
 	$result = $conn->query($sql);
 
 ?>
