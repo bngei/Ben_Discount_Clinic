@@ -121,7 +121,6 @@
         } else {
             echo "ERROR: Could not able to execute $sql_address. " . mysqli_error($conn);
         }
-    
         mysqli_close($conn);
     }
     ob_end_flush();

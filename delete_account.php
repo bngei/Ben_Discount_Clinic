@@ -35,7 +35,6 @@
    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
     <input type="submit" name="Yes" value="Yes">
     <input type="submit" name="No" value="No">
-
 </body>
 
 <?php 

@@ -33,7 +33,6 @@ if($result && mysqli_num_rows($result) > 0)
 
 	    echo "<option value='$doctor_id'>$fname, $minit, $lname, $phone, $gender, $specialty</option>";
 	}
-
 	echo "</select>";
 }
 ?>

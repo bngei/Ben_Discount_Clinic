@@ -12,7 +12,7 @@ function check_login($conn)
 		if($result && mysqli_num_rows($result) > 0)
 		{
 
-			$user_data = mysqli_fetch_assoc($result);
+			$user_data = mysqli_fetch_assoc($result);			
 			return $user_data;
 
 		}

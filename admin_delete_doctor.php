@@ -63,6 +63,7 @@
                 <th>First Name</th>
                 <th>Middle Initial</th>
                 <th>Last Name</th>
+                <th>Specialty</th>
                 <th>Delete Doctor</th>
             </tr>
         </thead>
@@ -77,6 +78,7 @@
                         echo "<td>" . $row['first_name'] . "</td>";
                         echo "<td>" . $row['middle_initial'] . "</td>"; 
                         echo "<td>" . $row['last_name'] . "</td>";
+                        echo "<td>" . $row['specialty'] . "</td>";
                         echo "<td>";
 
                         echo "<form method='POST' action= 'admin_delete_doctor.php'>";

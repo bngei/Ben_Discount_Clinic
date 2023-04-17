@@ -9,8 +9,8 @@
 
 
     $patient = "SELECT *
-				FROM discount_clinic.doctor, discount_clinic.user
-				WHERE doctor.user_id = user.user_id AND user.username = '$username'";
+	FROM discount_clinic.doctor, discount_clinic.user
+	WHERE doctor.user_id = user.user_id AND user.username = '$username'";
 	 
    	
     $patient_result = mysqli_query($conn, $patient);

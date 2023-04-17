@@ -4,4 +4,4 @@ emergencyContactPhoneInput.addEventListener('input', function() {
     } else {
       emergencyContactPhoneError.textContent = '';
     }
-  });
+});

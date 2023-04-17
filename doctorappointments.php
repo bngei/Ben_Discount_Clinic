@@ -101,6 +101,4 @@ session_start();
 	FROM discount_clinic.appointment, discount_clinic.office, discount_clinic.address, discount_clinic.doctor
 	WHERE doctor.doctor_id = '$doctor_id' AND office.address_id = address.address_id AND appointment.office_id = office.office_id AND appointment.doctor_id = doctor.doctor_id";
 	$result = $conn->query($sql);
-
-	echo $result->num_row;
 ?>

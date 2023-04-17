@@ -12,8 +12,8 @@ dateInput.addEventListener('input', function() {
 });
 
 
-var startHour = 8; // 8am
-var endHour = 14; // 2pm
+var startHour = 8; 
+var endHour = 14; 
 var select = document.getElementById("time");
 for (var hour = startHour; hour < endHour; hour++) {
     for (var minute = 0; minute < 60; minute += 30) {

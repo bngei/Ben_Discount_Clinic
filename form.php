@@ -269,10 +269,7 @@ session_start();
             <option value="">Select doctor</option>
           </select>
           <button type="submit" value="Submit">Submit</button>
-
         <form>
-
-
 <?php
     include("dbh-inc.php");
     include("functions.php");
