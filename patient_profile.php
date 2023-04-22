@@ -164,6 +164,9 @@ if ($patient_result && mysqli_num_rows($patient_result) > 0) {
 	</form>
 
 
+	<a class = "delete" href="patient_change_doctor.php">Click to Change Primary Doctor</a>
+
+
 	<h2>Delete Account</h2>
 	<a class = "delete" href="delete_account.php">Click to Delete Account</a>
 
@@ -359,7 +362,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				echo "Invalid input";
 				break;
 			}
-
+		
 		//edit emergency last name
 		case "e_last_name":
 			if(ctype_alpha($_POST['new_value'])) {

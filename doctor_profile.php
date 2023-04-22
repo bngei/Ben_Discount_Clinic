@@ -115,6 +115,7 @@
 		<input type="text" id="new_value" name="new_value">
 		<input type="submit" value="Update">
 	</form>
+	
 </body>
 </html>
 

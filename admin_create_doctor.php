@@ -93,7 +93,6 @@ session_start();
                 include("dbh-inc.php");
                 include("functions.php");
             
-
 	    		$office_address_query = "SELECT * 
 				FROM discount_clinic.office, discount_clinic.address
 				WHERE office.address_id = address.address_id";

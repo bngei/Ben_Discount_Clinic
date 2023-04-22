@@ -25,8 +25,7 @@ DELIMITER $$
 CREATE TRIGGER `approval_trigger` BEFORE INSERT ON `appointment` FOR EACH ROW
 BEGIN 
 	-- IF THE DOCTOR YOU WANT AN APPOINTMENT WITH IS NOT A PRIMARY DOCTOR
-	IF (((SELECT doctor.specialty FROM doctor WHERE new.doctor_id = doctor.doctor_id) <> 'primary') 
-    AND 
+	IF (((SELECT doctor.specialty FROM doctor WHERE new.doctor_id = doctor.doctor_id) <> 'primary') AND 
     -- IF THE APPROVAL STATUS WITH THE DOCTOR IS FALSE
     (SELECT approval.approval_bool FROM approval WHERE new.patient_id = approval.patient_id AND new.doctor_id = approval.specialist_doctor_id) = FALSE)
 	THEN
